@@ -1,0 +1,7 @@
+{
+  "name": "alisa-birthday-rsvp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "RSVP page for Alisa's second birthday, 31 October 2026.",
+  "engines": { "node": ">=20" }
+}

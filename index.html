@@ -1,0 +1,744 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alisa turns 2 — RSVP</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="RSVP for Alisa's second birthday, Saturday 31 October 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --grape:#3B1D63;
+  --grape-deep:#2A1247;
+  --ink:#2A1746;
+  --ink-2:#61507E;
+  --ink-3:#8877A3;
+  --berry:#E8336D;
+  --berry-deep:#C81F57;
+  --tangerine:#FF8A3D;
+  --lemon:#FFD23F;
+  --mint:#19C39C;
+  --mint-deep:#0F8F73;
+  --sky:#4CB3FF;
+  --paper:#FFF6FB;
+  --card:#FFFFFF;
+  --line:#EFE0F2;
+  --line-2:#E2CFE8;
+  --shadow:0 10px 30px rgba(59,29,99,.10);
+  --radius:20px;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.fd{font-family:"Fredoka","Nunito",system-ui,sans-serif;font-weight:600;letter-spacing:-.01em}
+h2{font-size:clamp(26px,4.4vw,36px);line-height:1.15;margin:0 0 10px}
+h3{font-size:20px;margin:0 0 6px}
+p{margin:0 0 14px;max-width:66ch}
+a{color:var(--berry-deep)}
+:focus-visible{outline:3px solid var(--sky);outline-offset:3px;border-radius:8px}
+
+.wrap{width:min(1000px,92vw);margin:0 auto}
+.narrow{width:min(760px,92vw);margin:0 auto}
+
+/* ---------- top bar ---------- */
+.bar{
+  position:sticky;top:0;z-index:60;
+  background:var(--grape-deep);
+  color:#fff;
+}
+.bar-in{display:flex;align-items:center;gap:14px;height:58px}
+.bar-name{font-family:"Fredoka";font-weight:600;font-size:17px;letter-spacing:.01em}
+.bar-name span{color:var(--lemon)}
+.bar .go{margin-left:auto}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-block;border:0;cursor:pointer;
+  font-family:"Fredoka";font-weight:600;font-size:16px;
+  padding:12px 22px;border-radius:999px;
+  background:var(--berry-deep);color:#fff;
+  text-decoration:none;line-height:1.2;
+  box-shadow:0 6px 0 #94123f;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.btn:hover{transform:translateY(2px);box-shadow:0 4px 0 #94123f}
+.btn:active{transform:translateY(6px);box-shadow:0 0 0 #94123f}
+.btn.sm{font-size:14px;padding:9px 16px;box-shadow:0 4px 0 #94123f}
+.btn.sm:hover{transform:translateY(2px);box-shadow:0 2px 0 #94123f}
+.btn.ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 2px currentColor}
+.btn.ghost:hover{transform:none;box-shadow:inset 0 0 0 2px currentColor;background:rgba(255,255,255,.12)}
+.btn[disabled]{opacity:.55;cursor:progress}
+
+.linkish{
+  background:none;border:0;padding:0;cursor:pointer;
+  font:inherit;color:var(--berry-deep);text-decoration:underline;
+  text-underline-offset:3px;
+}
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;overflow:hidden;
+  background:radial-gradient(120% 90% at 50% 0%,#4E2680 0%,var(--grape) 45%,var(--grape-deep) 100%);
+  color:#fff;
+  padding:44px 0 56px;
+  text-align:center;
+}
+.confetti{
+  position:absolute;inset:0;pointer-events:none;
+  -webkit-mask-image:radial-gradient(58% 48% at 50% 46%,transparent 55%,#000 100%);
+  mask-image:radial-gradient(58% 48% at 50% 46%,transparent 55%,#000 100%);
+}
+.confetti i{position:absolute;display:block;opacity:.85}
+.hero-in{position:relative}
+.balloon{width:min(210px,46vw);height:auto;display:block;margin:0 auto 6px;filter:drop-shadow(0 14px 26px rgba(0,0,0,.28))}
+.hero h1{
+  font-size:clamp(34px,7.2vw,60px);
+  line-height:1.05;margin:0 0 6px;color:#fff;font-weight:700;
+}
+.hero .sub{color:#E3D3F2;font-size:clamp(16px,2.4vw,19px);margin:0 auto 26px;max-width:30ch}
+
+.when{
+  display:inline-flex;flex-wrap:wrap;justify-content:center;gap:0;
+  background:rgba(255,255,255,.07);
+  border:1.5px solid rgba(255,255,255,.18);
+  border-radius:18px;padding:6px;margin-bottom:22px;
+}
+.when div{padding:10px 20px;text-align:center}
+.when div + div{border-left:1.5px dashed rgba(255,255,255,.22)}
+.when .k{display:block;font-size:12.5px;color:#CBB6E0;letter-spacing:.02em}
+.when .v{display:block;font-family:"Fredoka";font-weight:600;font-size:19px;color:#fff;margin-top:2px}
+.when .v em{font-style:normal;color:var(--lemon)}
+
+.venue-note{color:#CBB6E0;font-size:15px;margin:-8px auto 22px;max-width:38ch}
+.count{display:flex;justify-content:center;gap:8px;margin:0 0 24px}
+.count .u{
+  min-width:70px;background:rgba(255,255,255,.10);
+  border-radius:14px;padding:9px 6px 8px;
+}
+.count .n{display:block;font-family:"Fredoka";font-weight:600;font-size:26px;color:var(--lemon);line-height:1}
+.count .l{display:block;font-size:12px;color:#CBB6E0;margin-top:3px}
+
+/* ---------- sections ---------- */
+section{padding:56px 0}
+[id]{scroll-margin-top:74px}
+section.tint{background:#fff;border-top:1.5px solid var(--line);border-bottom:1.5px solid var(--line)}
+.lede{color:var(--ink-2);font-size:18px;margin-bottom:28px}
+
+/* ---------- prize tickets ---------- */
+.tickets{
+  display:grid;gap:12px;
+  grid-template-columns:repeat(5,1fr);
+  margin:0 0 16px;
+}
+@media (max-width:760px){
+  .tickets{grid-template-columns:repeat(2,1fr)}
+  .tickets .tk:nth-child(5){grid-column:1/-1}
+}
+.tk{
+  --w:32px;
+  position:relative;background:var(--card);
+  border:2px solid var(--line-2);border-radius:16px;
+  padding:16px 16px 14px calc(var(--w) + 16px);overflow:hidden;
+}
+.tk::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:var(--w);
+  background:var(--c,var(--berry));
+}
+.tk::after{
+  content:"";position:absolute;left:calc(var(--w) - 5px);top:9px;bottom:9px;width:0;
+  border-left:2.5px dashed rgba(255,255,255,.9);
+}
+.tk .rank{
+  position:absolute;left:0;top:0;bottom:0;width:var(--w);
+  display:grid;place-items:center;
+  font-family:"Fredoka";font-weight:700;font-size:17px;color:#fff;
+  writing-mode:vertical-rl;transform:rotate(180deg);
+  letter-spacing:.06em;
+}
+.tk h3{font-size:clamp(22px,2.4vw,26px);margin:0;line-height:1.1;color:var(--grape)}
+.tk p{font-size:14px;color:var(--ink-2);margin:0}
+.tk.cons h3{font-size:19px;margin-bottom:2px}
+.tk.cons{--c:var(--mint-deep);--w:80px}
+.tk.cons .rank{
+  writing-mode:horizontal-tb;transform:none;
+  font-size:13px;font-weight:600;line-height:1.25;text-align:center;padding:0 5px;
+}
+
+/* ---------- rule callout ---------- */
+.surprise{color:var(--ink-2);font-size:15.5px;margin:0 0 20px}
+.rule{
+  background:#FFF8E6;border:2px solid var(--lemon);
+  border-radius:var(--radius);padding:20px 22px;margin-top:26px;
+}
+.rule h3{color:var(--ink);display:flex;align-items:center;gap:9px}
+.rule .dot{
+  width:26px;height:26px;border-radius:50%;background:var(--lemon);
+  display:grid;place-items:center;font-size:16px;flex:0 0 auto;
+}
+.rule ul{margin:8px 0 0;padding-left:20px}
+.rule li{margin-bottom:7px}
+.rule li:last-child{margin-bottom:0}
+.rule .x{color:var(--berry-deep);font-weight:700}
+.rule .ok{color:var(--mint-deep);font-weight:700}
+
+/* ---------- form ---------- */
+.form{
+  background:var(--card);border:2px solid var(--line-2);
+  border-radius:var(--radius);padding:26px;box-shadow:var(--shadow);
+}
+.field{margin-bottom:22px}
+.field:last-of-type{margin-bottom:18px}
+.field > label,.legend{
+  display:block;font-family:"Fredoka";font-weight:500;font-size:16.5px;margin-bottom:4px;
+}
+.hint{display:block;font-size:14px;color:var(--ink-2);margin-bottom:9px;max-width:60ch}
+input[type=text],textarea{
+  width:100%;font:inherit;font-size:16.5px;color:var(--ink);
+  padding:12px 14px;border:2px solid var(--line-2);border-radius:12px;
+  background:#fff;
+}
+input[type=text]:focus,textarea:focus{border-color:var(--sky);outline:none;box-shadow:0 0 0 3px rgba(76,179,255,.25)}
+textarea{min-height:78px;resize:vertical}
+fieldset{border:0;padding:0;margin:0}
+.opts{display:flex;flex-wrap:wrap;gap:10px}
+.opt{flex:1 1 190px;position:relative}
+.opt input{position:absolute;width:1px;height:1px;opacity:0;margin:0;pointer-events:none}
+.opt span{
+  display:block;padding:13px 16px;border:2px solid var(--line-2);
+  border-radius:14px;cursor:pointer;background:#fff;
+  font-weight:600;font-size:16px;
+}
+.opt span small{display:block;font-weight:400;font-size:13.5px;color:var(--ink-2);margin-top:1px}
+.opt input:checked + span{border-color:var(--grape);background:#F6EFFB;box-shadow:inset 0 0 0 1px var(--grape)}
+.opt input:focus-visible + span{outline:3px solid var(--sky);outline-offset:2px}
+.opt.yes input:checked + span{border-color:var(--mint-deep);background:#E8FBF5;box-shadow:inset 0 0 0 1px var(--mint-deep)}
+.opt.no input:checked + span{border-color:var(--ink-3);background:#F5F1F8;box-shadow:inset 0 0 0 1px var(--ink-3)}
+
+.privacy{font-size:14px;color:var(--ink-2);margin:14px 0 0}
+.msg{margin-top:14px;padding:13px 16px;border-radius:12px;font-size:15.5px;display:none}
+.msg.show{display:block}
+.msg.err{background:#FFEDF2;border:2px solid var(--berry);color:#8E1038}
+.msg.ok{background:#E8FBF5;border:2px solid var(--mint-deep);color:#0A6D57}
+
+/* ---------- guest list ---------- */
+.momentum{
+  font-family:"Fredoka";font-weight:500;
+  font-size:clamp(19px,2.6vw,23px);line-height:1.35;
+  color:var(--grape);max-width:34ch;margin:0 0 24px;
+}
+.momentum b{font-weight:700;color:var(--berry-deep)}
+
+.lists{display:grid;gap:20px;align-items:start;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.list{background:var(--card);border:2px solid var(--line-2);border-radius:var(--radius);overflow:hidden}
+.list-head{
+  padding:14px 18px;color:#fff;
+  display:flex;align-items:baseline;gap:10px;
+  background:var(--h,var(--grape));
+}
+.list-head h3{margin:0;color:#fff;font-size:18px}
+.list-head .n{margin-left:auto;font-size:14.5px;color:rgba(255,255,255,.88)}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:11px 18px;font-size:16px;border-bottom:1px solid var(--line)}
+th{font-family:"Fredoka";font-weight:500;font-size:14px;color:var(--ink-2);background:#FCF8FD}
+tbody tr:last-child td{border-bottom:0}
+td.note{color:var(--ink-2);font-size:14.5px}
+.empty{padding:22px 18px;color:var(--ink-2);font-size:15.5px}
+.listfoot{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:20px;font-size:15px;color:var(--ink-2)}
+.regrets{margin-top:16px;font-size:15px;color:var(--ink-2)}
+.regrets summary{cursor:pointer;color:var(--berry-deep);width:max-content}
+.regrets p{margin:8px 0 0}
+
+footer{background:var(--grape-deep);color:#CBB6E0;padding:34px 0;text-align:center;font-size:15px}
+footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
+
+/* ---------- confetti burst ---------- */
+#burst{position:fixed;inset:0;pointer-events:none;z-index:90;overflow:hidden;display:none}
+#burst.on{display:block}
+#burst i{position:absolute;top:-16px;width:10px;height:14px;border-radius:2px;animation:fall linear forwards}
+@keyframes fall{
+  0%{transform:translateY(-20px) rotate(0deg);opacity:1}
+  100%{transform:translateY(105vh) rotate(720deg);opacity:.9}
+}
+
+@media (max-width:560px){
+  .bar-name{font-size:15px}
+  .when div{padding:9px 14px}
+  .when div + div{border-left:0;border-top:1.5px dashed rgba(255,255,255,.22)}
+  .when{flex-direction:column;width:100%}
+  .count .u{min-width:0;flex:1}
+  section{padding:44px 0}
+  .form{padding:20px}
+  .tk.cons{--w:62px}
+  .tk.cons .rank{font-size:12px}
+  th,td{padding:10px 14px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation-duration:.001ms !important;transition-duration:.001ms !important}
+  #burst{display:none !important}
+}
+</style>
+
+<div id="burst" aria-hidden="true"></div>
+
+<header class="bar">
+  <div class="wrap bar-in">
+    <div class="bar-name">Alisa turns <span>2</span></div>
+    <a class="btn sm go" href="#rsvp">RSVP</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+  <div class="wrap hero-in">
+
+    <svg class="balloon" viewBox="0 0 200 268" role="img" aria-label="A balloon with the number two">
+      <defs>
+        <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#FF9A4D"/>
+          <stop offset="55%" stop-color="#E8336D"/>
+          <stop offset="100%" stop-color="#B7247A"/>
+        </linearGradient>
+      </defs>
+      <path d="M100 8c44 0 80 38 80 88 0 46-33 82-63 92h-34C53 178 20 142 20 96 20 46 56 8 100 8z" fill="url(#bg1)"/>
+      <ellipse cx="68" cy="62" rx="20" ry="27" fill="#fff" opacity=".22" transform="rotate(-22 68 62)"/>
+      <path d="M92 186h16l-8 14z" fill="#B7247A"/>
+      <path d="M100 200c14 12-14 22 2 34s-4 20 2 30" stroke="#FFD23F" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <text x="100" y="140" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="118" fill="#fff">2</text>
+    </svg>
+
+    <h1>Alisa is turning two</h1>
+    <p class="sub">Come eat cake with us, and take a shot at the lucky draw.</p>
+
+    <div class="when">
+      <div>
+        <span class="k">Party day</span>
+        <span class="v">Saturday, <em>31 Oct 2026</em></span>
+      </div>
+      <div>
+        <span class="k">Where</span>
+        <span class="v"><em>To be confirmed</em></span>
+      </div>
+    </div>
+
+    <p class="venue-note">We're still sorting out the venue. It'll appear here the moment it's booked.</p>
+
+    <div class="count" id="count" aria-label="Time until the party"></div>
+
+    <a class="btn" href="#rsvp">Tell us if you're coming</a>
+  </div>
+</div>
+
+<section>
+  <div class="narrow">
+    <h2>Five prizes, and nobody goes home empty-handed</h2>
+    <p class="lede">Every confirmed guest gets one lucky draw number. We draw five winners on the day.</p>
+
+    <div class="tickets">
+      <article class="tk" style="--c:#C81F57"><h3>1st</h3><p>prize</p></article>
+      <article class="tk" style="--c:#E8336D"><h3>2nd</h3><p>prize</p></article>
+      <article class="tk" style="--c:#FF8A3D"><h3>3rd</h3><p>prize</p></article>
+      <article class="tk" style="--c:#E0A310"><h3>4th</h3><p>prize</p></article>
+      <article class="tk" style="--c:#6C4AB6"><h3>5th</h3><p>prize</p></article>
+    </div>
+
+    <p class="surprise">What the five prizes actually are stays a surprise until the day.</p>
+
+    <article class="tk cons">
+      <span class="rank">Everyone<br>else</span>
+      <h3>Consolation prize</h3>
+      <p>If your number isn't drawn in the top five, you still collect a consolation prize. Nobody leaves empty-handed.</p>
+    </article>
+
+    <div class="rule">
+      <h3><span class="dot" aria-hidden="true">!</span> Please enter each person's own name</h3>
+      <ul>
+        <li>Numbers are given per person, not per household — so one RSVP per guest.</li>
+        <li><span class="ok">Yes:</span> Sherman Tan, Michelle Tan, Ethan Tan — three separate entries.</li>
+        <li><span class="x">No:</span> "Sherman's family" or "Tan family x4". A group entry only gets one number, and we won't know who to hand a prize to.</li>
+        <li>Children count too. If they're coming, they get a number.</li>
+        <li><strong>Numbers go out on Friday, 30 October 2026</strong> — the day before the party. They'll appear on this page next to your name.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="tint" id="rsvp">
+  <div class="narrow">
+    <h2>Are you coming?</h2>
+    <p class="lede">Takes about twenty seconds. Sent the wrong answer? Just submit again with the same name and it will replace your last one.</p>
+
+    <form class="form" id="form" novalidate>
+      <div class="field">
+        <label for="name">Your full name</label>
+        <span class="hint">The name you'd like called out if you win. One person per entry.</span>
+        <input type="text" id="name" name="name" autocomplete="name" maxlength="60" placeholder="e.g. Sherman Tan">
+      </div>
+
+      <fieldset class="field">
+        <legend class="legend">Whose side are you on?</legend>
+        <span class="hint">Just so we can seat everyone together.</span>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="group" value="alvin"><span>Alvin's family</span></label>
+          <label class="opt"><input type="radio" name="group" value="gwen"><span>Gwen's family</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="field">
+        <legend class="legend">Can you make it?</legend>
+        <div class="opts">
+          <label class="opt yes"><input type="radio" name="going" value="yes"><span>I'll be there<small>Count me in for the draw</small></span></label>
+          <label class="opt no"><input type="radio" name="going" value="no"><span>I can't make it<small>Sorry to miss it</small></span></label>
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label for="note">Anything we should know? <span style="font-weight:400;color:var(--ink-2)">(optional)</span></label>
+        <span class="hint">Food allergies, arriving late, bringing a pram — that sort of thing.</span>
+        <textarea id="note" maxlength="140" placeholder="No nuts for me, please"></textarea>
+      </div>
+
+      <button class="btn" type="submit" id="submit">Send my RSVP</button>
+      <p class="privacy">Your name and note appear on the guest list below, which everyone with this link can see.</p>
+      <div class="msg" id="msg" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Who's coming so far</h2>
+    <p class="lede">Draw numbers get added here on 30 October.</p>
+
+    <p class="momentum" id="momentum"></p>
+
+    <div class="lists">
+      <div class="list" style="--h:#3B1D63">
+        <div class="list-head"><h3>Alvin's family</h3><span class="n" id="n-alvin"></span></div>
+        <div id="t-alvin"><p class="empty">Loading the guest list…</p></div>
+      </div>
+      <div class="list" style="--h:#B7247A">
+        <div class="list-head"><h3>Gwen's family</h3><span class="n" id="n-gwen"></span></div>
+        <div id="t-gwen"><p class="empty">Loading the guest list…</p></div>
+      </div>
+    </div>
+
+    <details class="regrets" id="regrets" hidden>
+      <summary id="regrets-sum"></summary>
+      <p id="regrets-list"></p>
+    </details>
+
+    <div class="listfoot">
+      <button class="linkish" id="refresh" type="button">Refresh the list</button>
+      <button class="linkish" id="csv" type="button">Download as a spreadsheet</button>
+      <span id="stamp"></span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="narrow">
+    <p><strong>Alisa's second birthday.</strong> Saturday, 31 October 2026. The venue is still to be confirmed &mdash; watch this page.</p>
+    <p style="margin:0">Anything else, message Alvin or Gwen directly.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(s){ return document.querySelector(s); };
+  var API    = "/api/rsvp";
+  var PARTY  = new Date("2026-10-31T00:00:00+08:00");
+  var guests = [];
+  var myName = null;
+  var setupNeeded = false;
+
+  /* ---------- hero confetti (deterministic, no re-shuffle on resize) ---------- */
+  (function(){
+    var host = $("#confetti");
+    if (!host) return;
+    var cols = ["#FFD23F","#E8336D","#FF8A3D","#19C39C","#4CB3FF","#FFFFFF"];
+    var seed = 7;
+    function rnd(){ seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; }
+    var out = "";
+    for (var i = 0; i < 34; i++){
+      var x = (rnd() * 100).toFixed(2);
+      var y = (rnd() * 100).toFixed(2);
+      var r = (rnd() * 360).toFixed(0);
+      var s = 5 + rnd() * 7;
+      var c = cols[Math.floor(rnd() * cols.length)];
+      var round = rnd() > .6;
+      out += '<i style="left:' + x + '%;top:' + y + '%;width:' + s.toFixed(1) + 'px;height:' +
+             (round ? s.toFixed(1) : (s * 1.5).toFixed(1)) + 'px;background:' + c +
+             ';border-radius:' + (round ? '50%' : '2px') +
+             ';transform:rotate(' + r + 'deg);opacity:' + (round ? .55 : .75) + '"></i>';
+    }
+    host.innerHTML = out;
+  })();
+
+  /* ---------- countdown ---------- */
+  (function(){
+    var host = $("#count");
+    function tick(){
+      var ms = PARTY - new Date();
+      if (ms <= 0){
+        host.innerHTML = '<div class="u" style="min-width:auto;padding:12px 22px">' +
+                         '<span class="n">Today</span><span class="l">Happy birthday, Alisa</span></div>';
+        return;
+      }
+      var d = Math.floor(ms / 864e5);
+      var h = Math.floor(ms % 864e5 / 36e5);
+      var m = Math.floor(ms % 36e5 / 6e4);
+      host.innerHTML =
+        unit(d, d === 1 ? "day" : "days") +
+        unit(h, h === 1 ? "hour" : "hours") +
+        unit(m, m === 1 ? "minute" : "minutes");
+      setTimeout(tick, 20000);
+    }
+    function unit(n, l){ return '<div class="u"><span class="n">' + n + '</span><span class="l">' + l + '</span></div>'; }
+    tick();
+  })();
+
+  /* ---------- talking to /api/rsvp ---------- */
+  function ask(opts){
+    return fetch(opts.url, opts.init).then(function(r){
+      return r.json().catch(function(){ return {}; }).then(function(body){
+        if (!r.ok){
+          var e = new Error(body.message || "Request failed");
+          e.code = body.error;
+          throw e;
+        }
+        return body;
+      });
+    });
+  }
+
+  function loadGuests(){
+    return ask({ url: API, init: { cache: "no-store" } }).then(function(b){
+      setupNeeded = false;
+      return b.guests || [];
+    }).catch(function(e){
+      if (e.code === "storage_not_configured") setupNeeded = true;
+      throw e;
+    });
+  }
+
+  function saveGuest(entry){
+    return ask({
+      url: API,
+      init: {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(entry)
+      }
+    });
+  }
+
+  function removeGuest(name){
+    return ask({ url: API + "?name=" + encodeURIComponent(name), init: { method: "DELETE" } });
+  }
+
+  /* ---------- rendering ---------- */
+  function esc(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c];
+    });
+  }
+
+  function byName(a, b){ return a.name.localeCompare(b.name, "en", { sensitivity:"base" }); }
+
+  function renderGroup(id, side){
+    var rows = guests.filter(function(g){ return g.going === "yes" && g.group === side; }).sort(byName);
+    var host = document.getElementById("t-" + side);
+    var count = document.getElementById("n-" + side);
+    count.textContent = rows.length === 0 ? "no one yet" : rows.length + (rows.length === 1 ? " person" : " people");
+    if (!rows.length){
+      host.innerHTML = '<p class="empty">' +
+        (setupNeeded
+          ? "The guest list isn't connected to its database yet."
+          : "Nobody from this side yet. Be the first.") +
+        '</p>';
+      return;
+    }
+    var anyNote = rows.some(function(r){ return r.note; });
+    var html = '<table><thead><tr><th scope="col">Guest</th>' +
+               (anyNote ? '<th scope="col">Note</th>' : "") +
+               '</tr></thead><tbody>';
+    rows.forEach(function(r){
+      html += "<tr><td>" + esc(r.name) + "</td>" +
+              (anyNote ? '<td class="note">' + (r.note ? esc(r.note) : "—") + "</td>" : "") + "</tr>";
+    });
+    host.innerHTML = html + "</tbody></table>";
+  }
+
+  function render(){
+    renderGroup("t-alvin", "alvin");
+    renderGroup("t-gwen", "gwen");
+
+    var yes = guests.filter(function(g){ return g.going === "yes"; });
+    var no  = guests.filter(function(g){ return g.going === "no"; });
+    $("#momentum").innerHTML = yes.length === 0
+      ? "No replies yet. Be the first name on the list."
+      : "<b>" + yes.length + "</b> " + (yes.length === 1 ? "person is" : "people are") +
+        " coming so far \u2014 that's " + yes.length +
+        (yes.length === 1 ? " number" : " numbers") + " in the draw.";
+
+    var reg = $("#regrets");
+    if (no.length){
+      reg.hidden = false;
+      $("#regrets-sum").textContent = no.length + (no.length === 1 ? " person can't make it" : " people can't make it");
+      $("#regrets-list").textContent = no.sort(byName).map(function(g){ return g.name; }).join(", ");
+    } else {
+      reg.hidden = true;
+    }
+
+    $("#stamp").textContent = "Updated " + new Date().toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" });
+  }
+
+  function refresh(){
+    return loadGuests().then(function(rows){
+      guests = rows;
+      render();
+    }).catch(function(err){
+      var text = setupNeeded
+        ? "The guest list isn't connected to its database yet. See step 2 of the README."
+        : "The guest list didn't load. Try Refresh below.";
+      ["alvin","gwen"].forEach(function(s){
+        document.getElementById("t-" + s).innerHTML = '<p class="empty">' + text + "</p>";
+      });
+      $("#momentum").textContent = "";
+      $("#stamp").textContent = "";
+    });
+  }
+
+  /* ---------- form ---------- */
+  function say(kind, text){
+    var m = $("#msg");
+    m.className = "msg show " + kind;
+    m.innerHTML = text;
+  }
+
+  function pop(){
+    var host = $("#burst");
+    if (!host || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var cols = ["#FFD23F","#E8336D","#FF8A3D","#19C39C","#4CB3FF","#6C4AB6"];
+    var out = "";
+    for (var i = 0; i < 60; i++){
+      out += '<i style="left:' + (Math.random() * 100).toFixed(1) + "%;background:" +
+             cols[i % cols.length] + ";animation-duration:" + (2 + Math.random() * 1.8).toFixed(2) +
+             "s;animation-delay:" + (Math.random() * .5).toFixed(2) + 's"></i>';
+    }
+    host.innerHTML = out;
+    host.classList.add("on");
+    setTimeout(function(){ host.classList.remove("on"); host.innerHTML = ""; }, 4200);
+  }
+
+  $("#form").addEventListener("submit", function(e){
+    e.preventDefault();
+    var name  = $("#name").value.trim().replace(/\s+/g, " ");
+    var group = document.querySelector('input[name="group"]:checked');
+    var going = document.querySelector('input[name="going"]:checked');
+    var note  = $("#note").value.trim();
+
+    if (name.length < 2){
+      say("err", "Please type your full name so we know who to give a number to.");
+      $("#name").focus();
+      return;
+    }
+    if (/\b(?:family|families|fam|household|clan|pax|et\s*al)\b|\band\s+(?:kids|family|co)\b|\bx\s*\d+\b|\+\s*\d+|\b\d+\s*(?:pax|persons?|people|adults?|kids?|children)\b/i.test(name)){
+      say("err", "That looks like a group entry. Each person needs their own name and their own number \u2014 please add one entry per guest.");
+      $("#name").focus();
+      return;
+    }
+    if (!group){ say("err", "Pick a side of the family so we can seat you together."); return; }
+    if (!going){ say("err", "Let us know whether you can make it."); return; }
+
+    var btn = $("#submit");
+    btn.disabled = true;
+    btn.textContent = "Sending…";
+
+    saveGuest({
+      name: name,
+      group: group.value,
+      going: going.value,
+      note: note
+    }).then(function(){
+      myName = name;
+      return refresh();
+    }).then(function(){
+      var first = name.split(" ")[0];
+      if (going.value === "yes"){
+        pop();
+        say("ok", "You're on the list, " + esc(first) +
+                  ". Your lucky draw number lands here on 30 October. " +
+                  '<button class="linkish" type="button" id="undo">Remove my RSVP</button>');
+      } else {
+        say("ok", "Noted, " + esc(first) + " \u2014 we'll miss you. " +
+                  '<button class="linkish" type="button" id="undo">Remove my RSVP</button>');
+      }
+      var undo = $("#undo");
+      if (undo) undo.addEventListener("click", function(){
+        if (!myName) return;
+        removeGuest(myName).then(function(){
+          myName = null;
+          return refresh();
+        }).then(function(){
+          say("ok", "Removed. You can RSVP again any time before 30 October.");
+        }).catch(function(){
+          say("err", "That didn't delete. Try again, or ask Alvin to take you off the list.");
+        });
+      });
+      $("#form").reset();
+    }).catch(function(err){
+      say("err", err && err.message
+        ? esc(err.message)
+        : "The RSVP didn't save. Check your connection and send it again.");
+    }).then(function(){
+      btn.disabled = false;
+      btn.textContent = "Send my RSVP";
+    });
+  });
+
+  /* ---------- list controls ---------- */
+  $("#refresh").addEventListener("click", function(){
+    $("#stamp").textContent = "Refreshing…";
+    refresh();
+  });
+
+  $("#csv").addEventListener("click", function(){
+    var rows = [["Name","Side","Attending","Note"]];
+    guests.slice().sort(byName).forEach(function(g){
+      rows.push([g.name, g.group === "alvin" ? "Alvin's family" : "Gwen's family",
+                 g.going === "yes" ? "Yes" : "No", g.note || ""]);
+    });
+    var csv = rows.map(function(r){
+      return r.map(function(c){ return '"' + String(c).replace(/"/g, '""') + '"'; }).join(",");
+    }).join("\n");
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([csv], { type:"text/csv" }));
+    a.download = "alisa-birthday-rsvp.csv";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  // Someone else may have replied while this tab sat open. Poll gently, and
+  // catch up straight away when the tab comes back to the front.
+  setInterval(function(){ if (!document.hidden) refresh(); }, 45000);
+  document.addEventListener("visibilitychange", function(){
+    if (!document.hidden) refresh();
+  });
+  window.addEventListener("focus", function(){ refresh(); });
+
+  refresh();
+})();
+</script>
