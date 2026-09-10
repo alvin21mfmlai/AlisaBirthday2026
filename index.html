@@ -30,6 +30,7 @@
 }
 
 *{box-sizing:border-box}
+[hidden]{display:none !important}   /* a display rule on a class otherwise beats the hidden attribute */
 html{scroll-behavior:smooth}
 body{
   margin:0;
@@ -237,6 +238,32 @@ fieldset{border:0;padding:0;margin:0}
   color:var(--grape);max-width:34ch;margin:0 0 24px;
 }
 .momentum b{font-weight:700;color:var(--berry-deep)}
+.hostbar{
+  display:flex;flex-wrap:wrap;align-items:center;gap:12px;
+  background:#F3ECFA;border:2px solid var(--grape);border-radius:14px;
+  padding:11px 16px;margin:0 0 20px;font-size:15px;color:var(--grape);
+}
+.editing{
+  background:#F3ECFA;border:2px solid var(--grape);border-radius:12px;
+  padding:11px 14px;margin:0 0 16px;font-size:15px;color:var(--grape);
+}
+td.num{
+  font-family:"Fredoka";font-weight:600;font-size:17px;
+  color:var(--berry-deep);width:1%;white-space:nowrap;
+}
+.mynum{
+  display:inline-block;background:var(--lemon);color:var(--ink);
+  font-family:"Fredoka";font-weight:700;font-size:17px;
+  padding:1px 10px;border-radius:999px;
+}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+td.act{text-align:right;white-space:nowrap;width:1%}
+td.act button{
+  background:none;border:0;padding:4px 6px;margin-left:2px;cursor:pointer;
+  font:inherit;font-size:14px;color:var(--berry-deep);
+  text-decoration:underline;text-underline-offset:3px;
+}
+td.act button:hover{color:#8E1038}
 
 .lists{display:grid;gap:20px;align-items:start;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
 .list{background:var(--card);border:2px solid var(--line-2);border-radius:var(--radius);overflow:hidden}
@@ -327,7 +354,7 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
       </div>
       <div>
         <span class="k">Where</span>
-        <span class="v"><em>To be confirmed</em></span>
+        <span class="v"><em>The Commodore Function Room</em></span>
       </div>
     </div>
 
@@ -365,7 +392,7 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
       <ul>
         <li>Numbers are given per person, not per household - so one RSVP per guest.</li>
         <li><span class="ok">Yes:</span> ABC, DEF, XYZ - three separate entries.</li>
-        <li><span class="x">No:</span> "ABC's family"". A group entry only gets one number, and we won't know who to hand a prize to.</li>
+        <li><span class="x">No:</span> "ABC's family". A group entry only gets one number, and we won't know who to hand a prize to.</li>
         <li>Children count too. If they're coming, they get a number.</li>
         <li><strong>Numbers go out on Friday, 30 October 2026</strong>, i.e., the day before the party. They'll appear on this page next to your name.</li>
       </ul>
@@ -408,8 +435,14 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
         <textarea id="note" maxlength="140" placeholder="No nuts for me, please"></textarea>
       </div> -->
 
+      <div class="editing" id="editing" hidden>
+        Editing <strong id="editing-name"></strong>.
+        <button class="linkish" type="button" id="cancel-edit">Cancel</button>
+      </div>
+
       <button class="btn" type="submit" id="submit">Send my RSVP</button>
-      <p class="privacy">Your name and note appear on the guest list below, which everyone with this link can see.</p>
+      <p class="privacy">Your reply appears on the guest list below, which everyone with this link can see.</p>
+      <p class="privacy" id="yours" hidden></p>
       <div class="msg" id="msg" role="status" aria-live="polite"></div>
     </form>
   </div>
@@ -418,9 +451,15 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
 <section>
   <div class="wrap">
     <h2>Who's coming so far</h2>
-    <p class="lede">Draw numbers get added here on 30 October.</p>
+    <p class="lede" id="drawnote">Draw numbers get added here on 30 October.</p>
 
     <p class="momentum" id="momentum"></p>
+
+    <div class="hostbar" id="hostbar" hidden>
+      <span>Host mode. You can edit or remove any entry below.</span>
+      <button class="linkish" type="button" id="issue" hidden>Issue draw numbers now</button>
+      <button class="linkish" type="button" id="leavehost">Leave host mode</button>
+    </div>
 
     <div class="lists">
       <div class="list" style="--h:#3B1D63">
@@ -448,7 +487,7 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
 
 <footer>
   <div class="narrow">
-    <p><strong>Alisa's second birthday.</strong> Saturday, 31 October 2026. The venue is still to be confirmed &mdash; watch this page.</p>
+    <p><strong>Alisa's second birthday.</strong> Saturday, 31 October 2026. The venue is at The Commodore Function Room. &mdash; watch this page.</p>
     <p style="margin:0">Anything else, message Alvin or Gwen directly. Thank you.</p>
   </div>
 </footer>
@@ -460,8 +499,39 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
   var API    = "/api/rsvp";
   var PARTY  = new Date("2026-10-31T00:00:00+08:00");
   var guests = [];
-  var myName = null;
   var setupNeeded = false;
+
+  var K_HOST = "alisa:hostkey", K_TOKEN = "alisa:token", K_NAME = "alisa:myname";
+  var hostKey = "", isHost = false, editingOriginal = null;
+  var draw = { issued: false, issuedAt: null, seed: null, opensAt: null };
+
+  function keep(k, v){ try { v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch(e){} }
+  function recall(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+
+  // Identifies this browser so a guest can undo their own RSVP later, even
+  // after closing the page. It is not a login and grants nothing else.
+  function myToken(){
+    var t = recall(K_TOKEN);
+    if (!t){
+      t = Math.random().toString(36).slice(2) + Date.now().toString(36);
+      keep(K_TOKEN, t);
+    }
+    return t;
+  }
+
+  // ?host=<key> turns on host mode and is then dropped from the address bar so
+  // it doesn't ride along in a screenshot or a shared link.
+  (function(){
+    var q = new URLSearchParams(location.search);
+    var k = q.get("host");
+    if (k){
+      hostKey = k;
+      keep(K_HOST, k);
+      history.replaceState(null, "", location.pathname + location.hash);
+    } else {
+      hostKey = recall(K_HOST) || "";
+    }
+  })();
 
   /* ---------- hero confetti (deterministic, no re-shuffle on resize) ---------- */
   (function(){
@@ -524,8 +594,12 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
   }
 
   function loadGuests(){
-    return ask({ url: API, init: { cache: "no-store" } }).then(function(b){
+    var url = API + (hostKey ? "?host=" + encodeURIComponent(hostKey) : "");
+    return ask({ url: url, init: { cache: "no-store" } }).then(function(b){
       setupNeeded = false;
+      isHost = !!b.host;
+      if (b.draw) draw = b.draw;
+      if (hostKey && !b.host && b.hostModeAvailable === false) hostKey = "";
       return b.guests || [];
     }).catch(function(e){
       if (e.code === "storage_not_configured") setupNeeded = true;
@@ -534,6 +608,7 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
   }
 
   function saveGuest(entry){
+    entry.token = myToken();
     return ask({
       url: API,
       init: {
@@ -545,7 +620,11 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
   }
 
   function removeGuest(name){
-    return ask({ url: API + "?name=" + encodeURIComponent(name), init: { method: "DELETE" } });
+    var url = API + "?name=" + encodeURIComponent(name);
+    var init = { method: "DELETE", headers: {} };
+    if (isHost && hostKey) init.headers["x-host-key"] = hostKey;
+    else url += "&token=" + encodeURIComponent(myToken());
+    return ask({ url: url, init: init });
   }
 
   /* ---------- rendering ---------- */
@@ -556,6 +635,32 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
   }
 
   function byName(a, b){ return a.name.localeCompare(b.name, "en", { sensitivity:"base" }); }
+
+  function tableFor(rows){
+    var anyNote = rows.some(function(r){ return r.note; });
+    var nums = draw.issued;
+    var html = '<table><thead><tr>' +
+               (nums ? '<th scope="col">No.</th>' : "") +
+               '<th scope="col">Guest</th>' +
+               (anyNote ? '<th scope="col">Note</th>' : "") +
+               (isHost ? '<th scope="col"><span class="sr">Actions</span></th>' : "") +
+               '</tr></thead><tbody>';
+    rows.forEach(function(r){
+      var n = esc(r.name);
+      html += "<tr>" +
+              (nums ? '<td class="num">' + (r.number ? r.number : "—") + "</td>" : "") +
+              "<td>" + n + "</td>" +
+              (anyNote ? '<td class="note">' + (r.note ? esc(r.note) : "—") + "</td>" : "") +
+              (isHost
+                ? '<td class="act">' +
+                  '<button type="button" data-edit="' + n + '">Edit</button>' +
+                  '<button type="button" data-remove="' + n + '">Remove</button>' +
+                  "</td>"
+                : "") +
+              "</tr>";
+    });
+    return html + "</tbody></table>";
+  }
 
   function renderGroup(id, side){
     var rows = guests.filter(function(g){ return g.going === "yes" && g.group === side; }).sort(byName);
@@ -570,15 +675,7 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
         '</p>';
       return;
     }
-    var anyNote = rows.some(function(r){ return r.note; });
-    var html = '<table><thead><tr><th scope="col">Guest</th>' +
-               (anyNote ? '<th scope="col">Note</th>' : "") +
-               '</tr></thead><tbody>';
-    rows.forEach(function(r){
-      html += "<tr><td>" + esc(r.name) + "</td>" +
-              (anyNote ? '<td class="note">' + (r.note ? esc(r.note) : "—") + "</td>" : "") + "</tr>";
-    });
-    host.innerHTML = html + "</tbody></table>";
+    host.innerHTML = tableFor(rows);
   }
 
   function render(){
@@ -597,12 +694,44 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
     if (no.length){
       reg.hidden = false;
       $("#regrets-sum").textContent = no.length + (no.length === 1 ? " person can't make it" : " people can't make it");
-      $("#regrets-list").textContent = no.sort(byName).map(function(g){ return g.name; }).join(", ");
+      no.sort(byName);
+      if (isHost){
+        reg.open = true;
+        $("#regrets-list").innerHTML = tableFor(no);
+      } else {
+        $("#regrets-list").textContent = no.map(function(g){ return g.name; }).join(", ");
+      }
     } else {
       reg.hidden = true;
+      $("#regrets-list").innerHTML = "";
     }
 
+    $("#drawnote").textContent = draw.issued
+      ? "Numbers are out. Yours is in the first column \u2014 hold on to it."
+      : "Draw numbers get added here on 30 October.";
+    $("#issue").hidden = !isHost || draw.issued;
+    $("#hostbar").hidden = !isHost;
+    showMine();
+
     $("#stamp").textContent = "Updated " + new Date().toLocaleTimeString([], { hour:"2-digit", minute:"2-digit" });
+  }
+
+  // A guest who has replied gets a standing way back to their own entry, so
+  // removing yourself doesn't depend on staying on the page after submitting.
+  function showMine(){
+    var el = $("#yours");
+    var mine = recall(K_NAME);
+    var row = mine && guests.filter(function(g){ return g.name === mine; })[0];
+    if (!row || isHost){ el.hidden = true; el.innerHTML = ""; return; }
+    el.hidden = false;
+    el.innerHTML =
+      (row.going === "yes" && row.number
+        ? 'Your lucky draw number is <strong class="mynum">' + row.number + "</strong>. "
+        : "") +
+      "You replied as <strong>" + esc(row.name) + "</strong>. " +
+      '<button class="linkish" type="button" data-edit="' + esc(row.name) + '">Change your answer</button>' +
+      " or " +
+      '<button class="linkish" type="button" data-remove="' + esc(row.name) + '">remove yourself</button>.';
   }
 
   function refresh(){
@@ -648,7 +777,11 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
     var name  = $("#name").value.trim().replace(/\s+/g, " ");
     var group = document.querySelector('input[name="group"]:checked');
     var going = document.querySelector('input[name="going"]:checked');
-    var note  = $("#note").value.trim();
+    // The note box is optional markup: comment the field out and this keeps
+    // working, without wiping notes that were collected while it existed.
+    var noteEl = $("#note");
+    var prior  = guests.filter(function(x){ return x.name === (editingOriginal || name); })[0];
+    var note   = noteEl ? noteEl.value.trim() : ((prior && prior.note) || "");
 
     if (name.length < 2){
       say("err", "Please type your full name so we know who to give a number to.");
@@ -673,31 +806,28 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
       going: going.value,
       note: note
     }).then(function(){
-      myName = name;
+      // Renaming means the old key has to go: a name is the entry's identity.
+      var renamedFrom = (editingOriginal && editingOriginal !== name) ? editingOriginal : null;
+      if (!isHost || !renamedFrom) keep(K_NAME, isHost && editingOriginal ? recall(K_NAME) : name);
+      if (renamedFrom) return removeGuest(renamedFrom).then(refresh);
       return refresh();
     }).then(function(){
+      var wasEditing = editingOriginal;
+      stopEdit();
       var first = name.split(" ")[0];
-      if (going.value === "yes"){
+      if (wasEditing){
+        say("ok", "Saved. " + esc(name) + " is up to date.");
+      } else if (going.value === "yes"){
         pop();
-        say("ok", "You're on the list, " + esc(first) +
-                  ". Your lucky draw number lands here on 30 October. " +
-                  '<button class="linkish" type="button" id="undo">Remove my RSVP</button>');
+        var mine = guests.filter(function(g){ return g.name === name; })[0];
+        say("ok", draw.issued && mine && mine.number
+          ? "You're on the list, " + esc(first) + ". Your lucky draw number is " +
+            mine.number + " \u2014 write it down."
+          : "You're on the list, " + esc(first) +
+            ". Your lucky draw number lands here on 30 October.");
       } else {
-        say("ok", "Noted, " + esc(first) + " \u2014 we'll miss you. " +
-                  '<button class="linkish" type="button" id="undo">Remove my RSVP</button>');
+        say("ok", "Noted, " + esc(first) + " \u2014 we'll miss you.");
       }
-      var undo = $("#undo");
-      if (undo) undo.addEventListener("click", function(){
-        if (!myName) return;
-        removeGuest(myName).then(function(){
-          myName = null;
-          return refresh();
-        }).then(function(){
-          say("ok", "Removed. You can RSVP again any time before 30 October.");
-        }).catch(function(){
-          say("err", "That didn't delete. Try again, or ask Alvin to take you off the list.");
-        });
-      });
       $("#form").reset();
     }).catch(function(err){
       say("err", err && err.message
@@ -709,6 +839,88 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
     });
   });
 
+  /* ---------- editing and removing ---------- */
+  function startEdit(name){
+    var g = guests.filter(function(x){ return x.name === name; })[0];
+    if (!g) return;
+    editingOriginal = g.name;
+    $("#name").value = g.name;
+    var grp = document.querySelector('input[name="group"][value="' + g.group + '"]');
+    var go  = document.querySelector('input[name="going"][value="' + g.going + '"]');
+    if (grp) grp.checked = true;
+    if (go) go.checked = true;
+    if ($("#note")) $("#note").value = g.note || "";
+    $("#editing-name").textContent = g.name;
+    $("#editing").hidden = false;
+    $("#submit").textContent = "Save changes";
+    $("#msg").className = "msg";
+    document.getElementById("rsvp").scrollIntoView({ block: "start" });
+    $("#name").focus();
+  }
+
+  function stopEdit(){
+    editingOriginal = null;
+    $("#editing").hidden = true;
+    $("#submit").textContent = "Send my RSVP";
+  }
+
+  $("#cancel-edit").addEventListener("click", function(){
+    stopEdit();
+    $("#form").reset();
+  });
+
+  // One listener covers both guest tables, the can't-make-it list, and the
+  // "you replied as" line, all of which are re-rendered on every refresh.
+  document.addEventListener("click", function(e){
+    var t = e.target.closest ? e.target.closest("[data-edit],[data-remove]") : null;
+    if (!t) return;
+
+    var editName = t.getAttribute("data-edit");
+    if (editName){ startEdit(editName); return; }
+
+    var name = t.getAttribute("data-remove");
+    if (!name) return;
+    if (!window.confirm("Remove " + name + " from the guest list?")) return;
+
+    t.disabled = true;
+    removeGuest(name).then(function(){
+      if (recall(K_NAME) === name) keep(K_NAME, null);
+      if (editingOriginal === name){ stopEdit(); $("#form").reset(); }
+      return refresh();
+    }).then(function(){
+      say("ok", esc(name) + " has been taken off the list.");
+    }).catch(function(err){
+      t.disabled = false;
+      say("err", err && err.message
+        ? esc(err.message)
+        : "That didn't remove. Try again in a moment.");
+    });
+  });
+
+  $("#issue").addEventListener("click", function(){
+    if (!window.confirm("Hand out lucky draw numbers now, before 30 October?\n\n" +
+                        "Numbers can't be reshuffled afterwards.")) return;
+    ask({
+      url: API,
+      init: {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-host-key": hostKey },
+        body: JSON.stringify({ action: "issue" })
+      }
+    }).then(refresh).then(function(){
+      say("ok", "Numbers are out. Seed " + esc(draw.seed || "") + " \u2014 keep it if you want to show the draw was fair.");
+    }).catch(function(err){
+      say("err", err && err.message ? esc(err.message) : "Couldn't issue the numbers.");
+    });
+  });
+
+  $("#leavehost").addEventListener("click", function(){
+    hostKey = ""; isHost = false;
+    keep(K_HOST, null);
+    stopEdit();
+    refresh();
+  });
+
   /* ---------- list controls ---------- */
   $("#refresh").addEventListener("click", function(){
     $("#stamp").textContent = "Refreshing…";
@@ -716,9 +928,10 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
   });
 
   $("#csv").addEventListener("click", function(){
-    var rows = [["Name","Side","Attending","Note"]];
+    var rows = [["Number","Name","Side","Attending","Note"]];
     guests.slice().sort(byName).forEach(function(g){
-      rows.push([g.name, g.group === "alvin" ? "Alvin's family" : "Gwen's family",
+      rows.push([g.number || "", g.name,
+                 g.group === "alvin" ? "Alvin's family" : "Gwen's family",
                  g.going === "yes" ? "Yes" : "No", g.note || ""]);
     });
     var csv = rows.map(function(r){
@@ -731,13 +944,25 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
     URL.revokeObjectURL(a.href);
   });
 
-  // Someone else may have replied while this tab sat open. Poll gently, and
-  // catch up straight away when the tab comes back to the front.
-  setInterval(function(){ if (!document.hidden) refresh(); }, 45000);
-  document.addEventListener("visibilitychange", function(){
-    if (!document.hidden) refresh();
+  // Someone else may have replied while this tab sat open. Poll gently while
+  // somebody is actually here, and catch up when the tab comes back to the
+  // front. A tab left open and forgotten stops polling after 20 minutes, so it
+  // can't sit there spending database requests all week.
+  var IDLE_AFTER = 20 * 60 * 1000;
+  var lastSeen = Date.now();
+  function seen(){ lastSeen = Date.now(); }
+  ["pointerdown","keydown","scroll","touchstart"].forEach(function(ev){
+    window.addEventListener(ev, seen, { passive: true });
   });
-  window.addEventListener("focus", function(){ refresh(); });
+  setInterval(function(){
+    if (document.hidden) return;
+    if (Date.now() - lastSeen > IDLE_AFTER) return;
+    refresh();
+  }, 60000);
+  document.addEventListener("visibilitychange", function(){
+    if (!document.hidden){ seen(); refresh(); }
+  });
+  window.addEventListener("focus", function(){ seen(); refresh(); });
 
   refresh();
 })();
