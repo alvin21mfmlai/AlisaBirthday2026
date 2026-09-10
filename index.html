@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Alisa turns 2 years old --> RSVP</title>
+<title>Alisa turns 2 — RSVP</title>
 <meta name="robots" content="noindex, nofollow">
 <meta name="description" content="RSVP for Alisa's second birthday, Saturday 31 October 2026.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -186,6 +186,12 @@ section.tint{background:#fff;border-top:1.5px solid var(--line);border-bottom:1.
 .walk figcaption{
   font-size:14.5px;color:var(--ink-2);text-align:center;max-width:36ch;
 }
+.vidfail{
+  background:#FFEDF2;border:2px solid var(--berry);border-radius:14px;
+  padding:12px 16px;margin:0;max-width:44ch;font-size:15px;color:#8E1038;
+  text-align:center;
+}
+.vidfail small{display:block;margin-top:5px;font-size:13px;opacity:.85}
 .rule{
   background:#FFF8E6;border:2px solid var(--lemon);
   border-radius:var(--radius);padding:20px 22px;margin-top:26px;
@@ -397,6 +403,7 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
           <a href="mrt-to-commodore.mp4">Download the walking route</a> instead.</p>
       </video>
       <figcaption>The walk from Canberra MRT to the door. Half a minute, no sound &mdash; tap to play.</figcaption>
+      <p class="vidfail" id="vidfail" hidden></p>
     </figure>
   </div>
 </section>
@@ -591,6 +598,52 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
              ';transform:rotate(' + r + 'deg);opacity:' + (round ? .55 : .75) + '"></i>';
     }
     host.innerHTML = out;
+  })();
+
+  /* ---------- the route video ---------- */
+  // A <video> that fails goes quiet: no error, just a dead frame. Say what
+  // happened instead, and tell the two failure modes apart, because they need
+  // completely different fixes.
+  (function(){
+    var v = document.querySelector(".walk video");
+    var out = document.getElementById("vidfail");
+    if (!v || !out) return;
+
+    var src = v.querySelector("source");
+    var url = src ? src.getAttribute("src") : "";
+    var reported = false;
+
+    function report(main, detail){
+      if (reported) return;
+      reported = true;
+      out.hidden = false;
+      out.innerHTML = main +
+        ' <a href="' + url + '" download>Download it instead</a>.' +
+        (detail ? "<small>" + detail + "</small>" : "");
+    }
+
+    function diagnose(){
+      if (location.protocol === "file:"){
+        report("The route video didn't load.",
+               "The page is open straight from a folder. Keep " + url +
+               " beside index.html, or view the deployed site.");
+        return;
+      }
+      fetch(url, { method: "HEAD" }).then(function(r){
+        if (r.ok){
+          report("This browser can't play the route video.",
+                 "The file is there, but the browser won't decode it.");
+        } else {
+          report("The route video is missing from the site.",
+                 url + " returned " + r.status + " \u2014 it probably wasn't deployed with the page.");
+        }
+      }).catch(function(){
+        report("The route video couldn't be reached.", "Check the connection and try again.");
+      });
+    }
+
+    v.addEventListener("error", diagnose);
+    if (src) src.addEventListener("error", diagnose);
   })();
 
   /* ---------- countdown ---------- */
