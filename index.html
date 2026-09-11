@@ -460,8 +460,8 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
         <legend class="legend">Whose side are you on?</legend>
         <span class="hint">Just so we can seat everyone together.</span>
         <div class="opts">
-          <label class="opt"><input type="radio" name="group" value="alvin"><span>Alvin's family</span></label>
-          <label class="opt"><input type="radio" name="group" value="gwen"><span>Gwen's family</span></label>
+          <label class="opt"><input type="radio" name="group" value="alvin"><span>Alvin's family or affiliates</span></label>
+          <label class="opt"><input type="radio" name="group" value="gwen"><span>Gwen's family or affiliates</span></label>
         </div>
       </fieldset>
 
@@ -507,11 +507,11 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
 
     <div class="lists">
       <div class="list" style="--h:#3B1D63">
-        <div class="list-head"><h3>Alvin's family</h3><span class="n" id="n-alvin"></span></div>
+        <div class="list-head"><h3>Alvin's family or affiliates</h3><span class="n" id="n-alvin"></span></div>
         <div id="t-alvin"><p class="empty">Loading the guest list…</p></div>
       </div>
       <div class="list" style="--h:#B7247A">
-        <div class="list-head"><h3>Gwen's family</h3><span class="n" id="n-gwen"></span></div>
+        <div class="list-head"><h3>Gwen's family or affiliates</h3><span class="n" id="n-gwen"></span></div>
         <div id="t-gwen"><p class="empty">Loading the guest list…</p></div>
       </div>
     </div>
@@ -1021,7 +1021,7 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
     var rows = [["Number","Name","Side","Attending","Note"]];
     guests.slice().sort(byName).forEach(function(g){
       rows.push([g.number || "", g.name,
-                 g.group === "alvin" ? "Alvin's family" : "Gwen's family",
+                 g.group === "alvin" ? "Alvin's family or affiliates" : "Gwen's family or affiliates",
                  g.going === "yes" ? "Yes" : "No", g.note || ""]);
     });
     var csv = rows.map(function(r){
