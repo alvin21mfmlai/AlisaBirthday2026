@@ -897,6 +897,13 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
       $("#name").focus();
       return;
     }
+    // Same placeholder guard the server applies, so "A1" fails before the trip.
+    var letters = name.replace(/[^a-z]/gi, "");
+    if (letters.length < 2 || /^[a-z]{1,2}[\s._-]*\d{1,4}$/i.test(name) || /^(.)\1+$/i.test(letters)){
+      say("err", "Please use a real name \u2014 that's what gets called out if you win.");
+      $("#name").focus();
+      return;
+    }
     if (/\b(?:family|families|fam|household|clan|pax|et\s*al)\b|\band\s+(?:kids|family|co)\b|\bx\s*\d+\b|\+\s*\d+|\b\d+\s*(?:pax|persons?|people|adults?|kids?|children)\b/i.test(name)){
       say("err", "That looks like a group entry. Each person needs their own name and their own number \u2014 please add one entry per guest.");
       $("#name").focus();
