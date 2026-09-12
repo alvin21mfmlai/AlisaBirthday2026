@@ -2,7 +2,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Alisa turns 2 years old :)</title>
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="RSVP for Alisa's second birthday, Saturday 31 October 2026.">
+<meta name="description" content="RSVP for Alisa's second birthday, Sunday 1 November 2026.">
+
+<!-- ============================================================
+     How the link looks when you paste it into WhatsApp, Telegram,
+     Messages, Slack or Facebook. Edit the title and description
+     here, not the <title> above - chat apps read these first.
+     After changing them, see the note in README.md about clearing
+     the cached preview, or the old one keeps showing.
+     ============================================================ -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Alisa is turning two">
+<meta property="og:description" content="Sunday, 1 November 2026, 11am to 3pm at The Commodore Function Room. Tap to tell us if you're coming.">
+<meta property="og:image" content="link-preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A pink balloon with a number 2 on a sunny yellow background.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Alisa is turning two">
+<meta name="twitter:description" content="Sunday, 1 November 2026, 11am to 3pm at The Commodore Function Room. Tap to tell us if you're coming.">
+<meta name="twitter:image" content="link-preview.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -397,7 +416,7 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
       <a href="https://www.google.com/maps/search/?api=1&amp;query=65+Canberra+Drive+Singapore+769307" target="_blank" rel="noopener">Open in Maps</a>.</p>
 
     <figure class="walk">
-      <video controls playsinline preload="none" poster="none" width="478" height="850">
+      <video controls playsinline preload="metadata" width="478" height="850">
         <source src="mrt-to-commodore.mp4" type="video/mp4">
         <p>Your browser can't play this video.
           <a href="mrt-to-commodore.mp4">Download the walking route</a> instead.</p>
@@ -438,7 +457,7 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
         <li><span class="ok">Yes:</span> ABC, DEF, XYZ - three separate entries.</li>
         <li><span class="x">No:</span> "ABC's family". A group entry only gets one number, and we won't know who to hand a prize to.</li>
         <li>Children count too. If they're coming, they get a number.</li>
-        <li><strong>Numbers go out on Friday, 30 October 2026</strong>, i.e., the day before the party. They'll appear on this page next to your name.</li>
+        <li><strong>Numbers go out on Saturday, 31 October 2026</strong>, i.e., the day before the party. They'll appear on this page next to your name.</li>
       </ul>
     </div>
   </div>
@@ -495,7 +514,7 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
 <section>
   <div class="wrap">
     <h2>Who's coming so far</h2>
-    <p class="lede" id="drawnote">Draw numbers get added here on 30 October.</p>
+    <p class="lede" id="drawnote">Draw numbers get added here on 31 October.</p>
 
     <p class="momentum" id="momentum"></p>
 
@@ -531,7 +550,7 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
 
 <footer>
   <div class="narrow">
-    <!-- <p><strong>Alisa's second birthday.</strong> Saturday, 31 October 2026. The venue is at The Commodore Function Room.</p> -->
+    <!-- <p><strong>Alisa's second birthday.</strong> Sunday, 1 November 2026. The venue is at The Commodore Function Room.</p> -->
     <p style="margin:0">Anything else, message Alvin or Gwen directly. Thank you.</p>
   </div>
 </footer>
@@ -541,7 +560,7 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
   "use strict";
   var $ = function(s){ return document.querySelector(s); };
   var API    = "/api/rsvp";
-  var PARTY  = new Date("2026-10-31T00:00:00+08:00");
+  var PARTY  = new Date("2026-11-01T00:00:00+08:00");
   var guests = [];
   var setupNeeded = false;
 
@@ -798,7 +817,7 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
 
     $("#drawnote").textContent = draw.issued
       ? "Numbers are out. Yours is in the first column \u2014 hold on to it."
-      : "Draw numbers get added here on 30 October.";
+      : "Draw numbers get added here on 31 October.";
     $("#issue").hidden = !isHost || draw.issued;
     $("#hostbar").hidden = !isHost;
     showMine();
@@ -914,7 +933,7 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
           ? "You're on the list, " + esc(first) + ". Your lucky draw number is " +
             mine.number + " \u2014 write it down."
           : "You're on the list, " + esc(first) +
-            ". Your lucky draw number lands here on 30 October.");
+            ". Your lucky draw number lands here on 31 October.");
       } else {
         say("ok", "Noted, " + esc(first) + " \u2014 we'll miss you.");
       }
@@ -988,7 +1007,7 @@ footer strong{color:#fff;font-family:"Fredoka";font-weight:500}
   });
 
   $("#issue").addEventListener("click", function(){
-    if (!window.confirm("Hand out lucky draw numbers now, before 30 October?\n\n" +
+    if (!window.confirm("Hand out lucky draw numbers now, before 31 October?\n\n" +
                         "Numbers can't be reshuffled afterwards.")) return;
     ask({
       url: API,

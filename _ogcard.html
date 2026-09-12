@@ -1,0 +1,60 @@
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{width:1200px;height:630px;overflow:hidden;
+    font-family:"Nunito",system-ui,sans-serif;
+    background:radial-gradient(120% 120% at 30% 0%,#FFE86B 0%,#FFD23F 45%,#F0A82E 100%);
+    display:flex;align-items:center;gap:54px;padding:0 76px;position:relative}
+  .confetti{position:absolute;inset:0}
+  .confetti i{position:absolute;display:block}
+  .balloon{width:292px;flex:0 0 auto;position:relative;
+    filter:drop-shadow(0 18px 34px rgba(120,70,0,.32))}
+  .copy{position:relative}
+  h1{font-family:"Fredoka";font-weight:700;font-size:82px;line-height:1.02;
+    color:#2A1247;letter-spacing:-.02em;margin-bottom:22px}
+  .meta{font-family:"Fredoka";font-weight:600;font-size:31px;color:#C81F57;line-height:1.35}
+  .meta span{color:#6B4A12;font-weight:500}
+  .tag{display:inline-block;margin-top:26px;background:#C81F57;color:#fff;
+    font-family:"Fredoka";font-weight:600;font-size:25px;
+    padding:11px 26px;border-radius:999px}
+</style>
+
+<div class="confetti" id="c"></div>
+
+<svg class="balloon" viewBox="0 0 200 268" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF9A4D"/>
+      <stop offset="55%" stop-color="#E8336D"/>
+      <stop offset="100%" stop-color="#B7247A"/>
+    </linearGradient>
+  </defs>
+  <path d="M100 8c44 0 80 38 80 88 0 46-33 82-63 92h-34C53 178 20 142 20 96 20 46 56 8 100 8z" fill="url(#bg1)"/>
+  <ellipse cx="68" cy="62" rx="20" ry="27" fill="#fff" opacity=".22" transform="rotate(-22 68 62)"/>
+  <path d="M92 186h16l-8 14z" fill="#B7247A"/>
+  <path d="M100 200c14 12-14 22 2 34s-4 20 2 30" stroke="#B7247A" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <text x="100" y="140" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="118" fill="#fff">2</text>
+</svg>
+
+<div class="copy">
+  <h1>Alisa is<br>turning two</h1>
+  <p class="meta">Sunday, 1 November 2026 <span>· 11am to 3pm</span><br>
+    <span>The Commodore Function Room</span></p>
+  <span class="tag">Tap to RSVP</span>
+</div>
+
+<script>
+  var cols = ["#6C4AB6","#E8336D","#19C39C","#2E86DE","#F2600C","#3B1D63"];
+  var seed = 11, out = "";
+  function rnd(){ seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; }
+  for (var i = 0; i < 26; i++){
+    var x = rnd() * 100, y = rnd() * 100, r = rnd() * 360, s = 8 + rnd() * 10;
+    var round = rnd() > .6, c = cols[Math.floor(rnd() * cols.length)];
+    out += '<i style="left:' + x.toFixed(1) + '%;top:' + y.toFixed(1) + '%;width:' + s.toFixed(0) +
+           'px;height:' + (round ? s : s * 1.5).toFixed(0) + 'px;background:' + c +
+           ';border-radius:' + (round ? '50%' : '3px') + ';transform:rotate(' + r.toFixed(0) +
+           'deg);opacity:' + (round ? .55 : .7) + '"></i>';
+  }
+  document.getElementById("c").innerHTML = out;
+</script>
